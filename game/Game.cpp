@@ -30,13 +30,13 @@ void Game::initEntities() {
 	Vector2 earthPosition = { sunPosition.x, (height / 2) + 100 };
 	Entity earth(5l, 3l, earthVelocity, earthPosition);
 
-	//Vector2 marsVelocity = { 0.001f, 0.0f };
-	//Vector2 marsPosition = { sunPosition.x, (height / 2) + 150 };
-	//Entity mars(5l, 2l, marsVelocity, marsPosition);
+	Vector2 marsVelocity = { 0.001f, 0.0f };
+	Vector2 marsPosition = { sunPosition.x, (height / 2) + 150 };
+	Entity mars(5l, 2l, marsVelocity, marsPosition);
 
 	entities.push_back(sun);
 	entities.push_back(earth);
-	//entities.push_back(mars);
+	entities.push_back(mars);
 }
 
 void Game::initEntities(const std::vector<Entity>& entities) {
