@@ -20,5 +20,7 @@ private:
 	bool isPaused = false;
 	int timeScale = 1;
 	int stepsPerSecond = 1000 * timeScale;
+
+	int findMostMassive(std::vector<Entity>& entities);
 };
 
