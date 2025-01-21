@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include "Simulation.h"
+#include "../util/Vector2.h"
 #include "raymath.h"
 
 void Simulation::updateSim(std::vector<Entity>& entities) {
@@ -11,8 +12,8 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 	// For now, we only calculate gravity between 2 entities
 	Entity massiveBody = entities[mostMassIdx];
 	long mass1 = massiveBody.getMass();
-	Vector2 vel1 = massiveBody.getVelocity();
-	Vector2 pos1 = massiveBody.getPosition();
+	util::Vector2 vel1 = massiveBody.getVelocity();
+	util::Vector2 pos1 = massiveBody.getPosition();
 
 	for (int i = 0; i < entities.size(); i++) {
 		if (i == mostMassIdx) {
@@ -21,12 +22,12 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 
 		Entity& entity = entities[i];
 		long mass2 = entity.getMass();
-		Vector2 vel2 = entity.getVelocity();
-		Vector2 pos2 = entity.getPosition();
+		util::Vector2 vel2 = entity.getVelocity();
+		util::Vector2 pos2 = entity.getPosition();
 
 		// Get the difference in the X and Y positions of the two entities
-		float dX = pos1.x - pos2.x;
-		float dY = pos1.y - pos2.y;
+		double dX = pos1.x - pos2.x;
+		double dY = pos1.y - pos2.y;
 
 		// Calculate distance using pythagoras
 		double distance = sqrt(pow(dX, 2) + pow(dY, 2));
@@ -52,14 +53,14 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 		double accelY1 = acceleration1 * sin(thetaY);
 		double accelX2 = acceleration2 * cos(thetaX);
 		double accelY2 = acceleration2 * sin(thetaY);
-		Vector2 newVel1 = { accelX1 + vel1.x, accelY1 + vel1.y };
-		Vector2 newVel2 = { accelX2 + vel2.x, accelY2 + vel2.y };
-		massiveBody.setVelocity(newVel1);
-		entity.setVelocity(newVel2);
+		//Vector2 newVel1 = { accelX1 + vel1.x, accelY1 + vel1.y };
+		//Vector2 newVel2 = { accelX2 + vel2.x, accelY2 + vel2.y };
+		massiveBody.setVelocity(util::Vector2(accelX1 + vel1.x, accelY1 + vel1.y));
+		entity.setVelocity(util::Vector2(accelX2 + vel2.x, accelY2 + vel2.y));
 
 		// Update positions of each entity
-		Vector2 newPos1 = { pos1.x + massiveBody.getVelocity().x, pos1.y + massiveBody.getVelocity().y };
-		Vector2 newPos2 = { pos2.x + entity.getVelocity().x, pos2.y + entity.getVelocity().y };
+		util::Vector2 newPos1(pos1.x + massiveBody.getVelocity().x, pos1.y + massiveBody.getVelocity().y);
+		util::Vector2 newPos2(pos2.x + entity.getVelocity().x, pos2.y + entity.getVelocity().y);
 		massiveBody.setPosition(newPos1);
 		entity.setPosition(newPos2);
 	}

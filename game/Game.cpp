@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Entity.h"
 #include "Simulation.h"
+#include "../util/Vector2.h"
 
 #include <iostream>
 #include <string>
@@ -22,16 +23,16 @@ Game::~Game() {
 void Game::initEntities() {
 	// Initialize the entities
 	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
-	Vector2 sunVelocity = { 0.0f, 0.0f };
-	Vector2 sunPosition = { width / 2, height / 2 };
+	util::Vector2 sunVelocity(0.0, 0.0);
+	util::Vector2 sunPosition(width / 2, height / 2);
 	Entity sun(50l, 1000000l, sunVelocity, sunPosition);
 
-	Vector2 earthVelocity = { 0.001f, 0.0f };
-	Vector2 earthPosition = { sunPosition.x, (height / 2) + 100 };
+	util::Vector2 earthVelocity(0.001, 0.0);
+	util::Vector2 earthPosition(sunPosition.x, (height / 2) + 100);
 	Entity earth(5l, 3l, earthVelocity, earthPosition);
 
-	Vector2 marsVelocity = { 0.001f, 0.0f };
-	Vector2 marsPosition = { sunPosition.x, (height / 2) + 150 };
+	util::Vector2 marsVelocity(0.001, 0.0);
+	util::Vector2 marsPosition(sunPosition.x, (height / 2) + 150);
 	Entity mars(5l, 2l, marsVelocity, marsPosition);
 
 	entities.push_back(sun);

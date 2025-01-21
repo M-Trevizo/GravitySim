@@ -5,25 +5,25 @@
 Entity::Entity() {
 	radius = 1;
 	mass = 1;
-	velocity = { 0.0f, 0.0f };
+	velocity = util::Vector2(0, 0);
 
-	float x = static_cast<float>(rand() % 800);
-	float y = static_cast<float>(rand() % 600);
-	position = { x, y };
+	double x = rand() % 800;
+	double y = rand() % 600;
+	position = util::Vector2(x, y);
 }
 
-Entity::Entity(long r, long m, Vector2 v, Vector2 pos) {
+Entity::Entity(long r, long m, util::Vector2 v, util::Vector2 pos) {
 	radius = r;
 	mass = m;
 	velocity = v;
 	position = pos;
 }
 
-void Entity::setVelocity(Vector2 updatedVelocity) {
+void Entity::setVelocity(util::Vector2 updatedVelocity) {
 	velocity = updatedVelocity;
 }
 
-void Entity::setPosition(Vector2 updatedPosition) {
+void Entity::setPosition(util::Vector2 updatedPosition) {
 	position = updatedPosition;
 }
 
