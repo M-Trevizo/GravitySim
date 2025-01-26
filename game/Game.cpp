@@ -22,13 +22,15 @@ Game::~Game() {
 
 // Initialize the entities
 void Game::initEntities() {
+	double scaleFactor = sim.getScaleFactor();
+
 	util::Vector2 sunVelocity(0.0, 0.0);
 	util::Vector2 sunPosition(width / 2, height / 2);
 	Entity sun(50l, 1.988416e6, sunVelocity, sunPosition);
 
 	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
 	util::Vector2 earthVelocity(0.001, 0.0);
-	util::Vector2 earthPosition(sunPosition.x, (height / 2) + (149598023 * sim.getScaleFactor()));
+	util::Vector2 earthPosition(sunPosition.x, (height / 2) + (149598023 * scaleFactor));
 	Entity earth(5l, 5.972168, earthVelocity, earthPosition);
 
 	// MarsMass / SunMass = 3.227 * 10^-7 kg/kg (3.227 / 10,000,000)
@@ -76,15 +78,16 @@ void Game::start() {
 			BeginMode2D(camera);
 
 				Entity::drawEntities(entities);
-				if (sim.getIsPaused()) {
-					drawPauseModal();
-				}
 				
-				if (showDebug) {
-					drawDebugInfo();
-				}
-		
 			EndMode2D();
+
+			if (sim.getIsPaused()) {
+				drawPauseModal();
+			}
+
+			if (showDebug) {
+				drawDebugInfo();
+			}
 		
 		EndDrawing();
 
@@ -141,8 +144,8 @@ void Game::drawTitleScreen() {
 }
 
 void Game::drawPauseModal() {
-	float targetX = camera.target.x + (getCenter().x - 100);
-	float targetY = camera.target.y + (getCenter().y - 50);
+	float targetX = getCenter().x - 100;
+	float targetY = getCenter().y - 50;
 	int textCenter = MeasureText("Paused", 30) / 2;
 
 	DrawRectangle(targetX, targetY, 200, 100, BLACK);
@@ -151,21 +154,20 @@ void Game::drawPauseModal() {
 }
 
 void Game::drawDebugInfo() {
-	float offsetX = camera.target.x + 10;
-	float camY = camera.target.y;
+	float posX = 10.0f;
 	int fontSize = 20;
 
 	float deltaTime = GetFrameTime();
 	int stepsPerSecond = sim.getStepsPerSecond();
 
 	std::string deltaStr = "Delta Time: " + std::to_string(deltaTime);
-	DrawText(deltaStr.c_str(), offsetX, camY + 40, fontSize, WHITE);
+	DrawText(deltaStr.c_str(), posX, 40, fontSize, WHITE);
 
 	std::string stepsStr = "Steps per second: " + std::to_string(stepsPerSecond);
-	DrawText(stepsStr.c_str(), offsetX, camY + 70, fontSize, WHITE);
+	DrawText(stepsStr.c_str(), posX, 70, fontSize, WHITE);
 
 	std::string timeStr = "Time Scale: " + std::to_string(sim.getTimeScale());
-	DrawText(timeStr.c_str(), offsetX, camY + 100, fontSize, WHITE);
+	DrawText(timeStr.c_str(), posX, 100, fontSize, WHITE);
 }
 
 void Game::dragCamera() {
