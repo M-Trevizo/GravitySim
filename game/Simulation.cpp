@@ -11,7 +11,7 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 
 	// For now, we only calculate gravity between 2 entities
 	Entity massiveBody = entities[mostMassIdx];
-	long mass1 = massiveBody.getMass();
+	double mass1 = massiveBody.getMass();
 	util::Vector2 vel1 = massiveBody.getVelocity();
 	util::Vector2 pos1 = massiveBody.getPosition();
 
@@ -21,7 +21,7 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 		}
 
 		Entity& entity = entities[i];
-		long mass2 = entity.getMass();
+		double mass2 = entity.getMass();
 		util::Vector2 vel2 = entity.getVelocity();
 		util::Vector2 pos2 = entity.getPosition();
 
@@ -53,10 +53,10 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 		double accelY1 = acceleration1 * sin(thetaY);
 		double accelX2 = acceleration2 * cos(thetaX);
 		double accelY2 = acceleration2 * sin(thetaY);
-		//Vector2 newVel1 = { accelX1 + vel1.x, accelY1 + vel1.y };
-		//Vector2 newVel2 = { accelX2 + vel2.x, accelY2 + vel2.y };
-		massiveBody.setVelocity(util::Vector2(accelX1 + vel1.x, accelY1 + vel1.y));
-		entity.setVelocity(util::Vector2(accelX2 + vel2.x, accelY2 + vel2.y));
+		util::Vector2 newVel1(accelX1 + vel1.x, accelY1 + vel1.y);
+		util::Vector2 newVel2(accelX2 + vel2.x, accelY2 + vel2.y);
+		massiveBody.setVelocity(newVel1);
+		entity.setVelocity(newVel2);
 
 		// Update positions of each entity
 		util::Vector2 newPos1(pos1.x + massiveBody.getVelocity().x, pos1.y + massiveBody.getVelocity().y);
@@ -84,9 +84,9 @@ void Simulation::updateStepsPerSecond() {
 // Returns index of the most massive entity
 int Simulation::findMostMassive(std::vector<Entity>& entities) {
 	int mostMassIdx = 0;
-	long largestMass = entities[0].getMass();
+	double largestMass = entities[0].getMass();
 	for (int i = 0; i < entities.size(); i++) {
-		long mass = entities[i].getMass();
+		double mass = entities[i].getMass();
 		if (mass > largestMass) {
 			largestMass = mass;
 			mostMassIdx = i;
