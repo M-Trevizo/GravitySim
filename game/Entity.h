@@ -8,11 +8,11 @@
 class Entity {
 public:
 	Entity();
-	Entity(long r, long m, util::Vector2 v, util::Vector2 pos);
+	Entity(long r, double m, util::Vector2 v, util::Vector2 pos);
 
 	util::Vector2 getVelocity() const { return velocity; }
 	util::Vector2 getPosition() const { return position; }
-	int getMass() const { return mass; }
+	double getMass() const { return mass; }
 
 	void setVelocity(util::Vector2 updatedVelocity);
 	void setPosition(util::Vector2 updatedPosition);
@@ -22,8 +22,8 @@ public:
 	static void drawEntities(const std::vector<Entity>& entities);
 
 private:
-	int radius;
-	int mass;
+	long radius;
+	double mass;
 	util::Vector2 velocity;
 	util::Vector2 position;
 };

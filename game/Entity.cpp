@@ -12,7 +12,7 @@ Entity::Entity() {
 	position = util::Vector2(x, y);
 }
 
-Entity::Entity(long r, long m, util::Vector2 v, util::Vector2 pos) {
+Entity::Entity(long r, double m, util::Vector2 v, util::Vector2 pos) {
 	radius = r;
 	mass = m;
 	velocity = v;
@@ -28,18 +28,18 @@ void Entity::setPosition(util::Vector2 updatedPosition) {
 }
 
 void Entity::drawEntity(Entity entity) {
-	int radius = entity.radius;
-	int posX = entity.position.x;
-	int posY = entity.position.y;
+	float radius = static_cast<float>(entity.radius);
+	int posX = static_cast<int>(entity.position.x);
+	int posY = static_cast<int>(entity.position.y);
 
 	DrawCircle(posX, posY, radius, WHITE);
 }
 
 void Entity::drawEntities(const std::vector<Entity>& entities) {
 	for (int i = 0; i < entities.size(); i++) {
-		int radius = entities[i].radius;
-		int posX = entities[i].position.x;
-		int posY = entities[i].position.y;
+		float radius = static_cast<float>(entities[i].radius);
+		int posX = static_cast<int>(entities[i].position.x);
+		int posY = static_cast<int>(entities[i].position.y);
 
 		DrawCircle(posX, posY, radius, WHITE);
 	}
