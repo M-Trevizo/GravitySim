@@ -20,20 +20,21 @@ Game::~Game() {
 	CloseWindow();
 }
 
+// Initialize the entities
 void Game::initEntities() {
-	// Initialize the entities
-	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
 	util::Vector2 sunVelocity(0.0, 0.0);
 	util::Vector2 sunPosition(width / 2, height / 2);
-	Entity sun(50l, 1000000l, sunVelocity, sunPosition);
+	Entity sun(50l, 1.988416e6, sunVelocity, sunPosition);
 
+	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
 	util::Vector2 earthVelocity(0.001, 0.0);
-	util::Vector2 earthPosition(sunPosition.x, (height / 2) + 100);
-	Entity earth(5l, 3l, earthVelocity, earthPosition);
+	util::Vector2 earthPosition(sunPosition.x, (height / 2) + (149598023 * sim.getScaleFactor()));
+	Entity earth(5l, 5.972168, earthVelocity, earthPosition);
 
+	// MarsMass / SunMass = 3.227 * 10^-7 kg/kg (3.227 / 10,000,000)
 	util::Vector2 marsVelocity(0.001, 0.0);
-	util::Vector2 marsPosition(sunPosition.x, (height / 2) + 150);
-	Entity mars(5l, 2l, marsVelocity, marsPosition);
+	util::Vector2 marsPosition(sunPosition.x, (height / 2) + 125);
+	Entity mars(4l, 0.639022, marsVelocity, marsPosition);
 
 	entities.push_back(sun);
 	entities.push_back(earth);
@@ -54,7 +55,8 @@ void Game::start() {
 	// Main game loop
 	while (!WindowShouldClose()) {
 		
-		handleMouseEvents();
+		zoomCamera();
+		handleMousePresses();
 		processKeyPresses();
 
 		BeginDrawing();
@@ -118,7 +120,7 @@ void Game::processKeyPresses() {
 	}
 }
 
-void Game::handleMouseEvents() {
+void Game::handleMousePresses() {
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 		dragCamera();
 	}
@@ -170,6 +172,26 @@ void Game::dragCamera() {
 	Vector2 delta = GetMouseDelta();
 	delta = Vector2Scale(delta, -1.0f / camera.zoom);
 	camera.target = Vector2Add(camera.target, delta);
+}
+
+void Game::zoomCamera() {
+	float wheel = GetMouseWheelMove();
+	if (wheel != 0) {
+		// Get the world point that is under the mouse
+		Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+
+		// Set the offset to where the mouse is
+		camera.offset = GetMousePosition();
+
+		// Set the target to match, so that the camera maps the world space point 
+		// under the cursor to the screen space point under the cursor at any zoom
+		camera.target = mouseWorldPos;
+
+		// Zoom increment
+		float scaleFactor = 1.0f + (0.25f * fabs(wheel));
+		if (wheel < 0) scaleFactor = 1.0f / scaleFactor;
+		camera.zoom = Clamp(camera.zoom * scaleFactor, 0.125f, 64.0f);
+	}
 }
 
 void Game::toggleDebug() {

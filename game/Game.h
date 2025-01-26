@@ -36,8 +36,9 @@ private:
 	void initEntities();
 	void initEntities(const std::vector<Entity>& entities);
 	void processKeyPresses();
-	void handleMouseEvents();
+	void handleMousePresses();
 	void dragCamera();
+	void zoomCamera();
 
 	void drawTitleScreen();
 	void drawPauseModal();
