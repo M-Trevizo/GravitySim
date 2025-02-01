@@ -18,8 +18,8 @@ public:
 	void toggleDebug();
 
 private:
-	const int height = 768;
-	const int width = 1366;
+	const int height = 900;
+	const int width = 1600;
 	const Vector2 center = { width / 2.0f, height / 2.0f };
 	Simulation sim;
 	Camera2D camera = { 0 };

@@ -28,6 +28,20 @@ void Game::initEntities() {
 	double sunMass = 1.988416e30;
 	Entity sun(100, sunMass, sunVelocity, sunPosition, YELLOW);
 
+	// Mercury
+	util::Vector2 mercuryVelocity(47.36, 0.0);
+	util::Vector2 mercuryPosition(sunPosition.x, sunPosition.y + 57.91e6);
+	double mercuryRadius = 2439.7;
+	double mercuryMass = 3.3011e23;
+	Entity mercury(15, mercuryMass, mercuryVelocity, mercuryPosition, GRAY);
+
+	// Venus
+	util::Vector2 venusVelocity(35.02, 0.0);
+	util::Vector2 venusPosition(sunPosition.x, sunPosition.y + 108.94e6);
+	double venusRadius = 6051.8;
+	double venusMass = 4.8675e24;
+	Entity venus(25, venusMass, venusVelocity, venusPosition, {192, 191, 187, 255});
+
 	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
 	util::Vector2 earthVelocity(29.7827, 0.0);
 	util::Vector2 earthPosition(sunPosition.x, sunPosition.y + 149598023);
@@ -42,7 +56,10 @@ void Game::initEntities() {
 	double marsMass = 6.4171e23;
 	Entity mars(20, marsMass, marsVelocity, marsPosition, RED);
 
+
 	entities.push_back(sun);
+	entities.push_back(mercury);
+	entities.push_back(venus);
 	entities.push_back(earth);
 	entities.push_back(mars);
 }
@@ -53,7 +70,7 @@ void Game::initEntities(const std::vector<Entity>& entities) {
 
 void Game::start() {
 	// Set camera zoom
-	camera.zoom = 0.75f;
+	camera.zoom = 0.5f;
 	
 	// Start a frame counter
 	int framCounter = 0;
