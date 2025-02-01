@@ -51,8 +51,8 @@ void Entity::drawEntity(Entity entity) {
 void Entity::drawEntities(const std::vector<Entity>& entities) {
 	for (int i = 0; i < entities.size(); i++) {
 		float radius = static_cast<float>(entities[i].radius);
-		int posX = static_cast<int>(entities[i].position.x * distanceScale);
-		int posY = static_cast<int>(entities[i].position.y * distanceScale);
+		int posX = static_cast<int>(entities[i].position.x * distanceScale) + GetScreenWidth();
+		int posY = static_cast<int>(entities[i].position.y * distanceScale) + GetScreenHeight();
 		Color color = entities[i].color;
 
 		DrawCircle(posX, posY, radius, color);
