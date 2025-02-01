@@ -30,7 +30,9 @@ void Simulation::updateSim(std::vector<Entity>& entities) {
 		double dY = pos1.y - pos2.y;
 
 		// Calculate distance using pythagoras
+		// Then convert distance from km to m
 		double distance = sqrt(pow(dX, 2) + pow(dY, 2));
+		distance *= 1000;
 
 		// Calculate gravitation force using Newtonian gravity
 		double gravForce = gravConstant * ((mass1 * mass2) / pow(distance, 2));
@@ -77,7 +79,7 @@ void Simulation::setTimeScale(int newTimeScale) {
 }
 
 void Simulation::updateStepsPerSecond() {
-	stepsPerSecond = timeScale * 1000;
+	stepsPerSecond = timeScale * 5000;
 }
 
 // Finds entity with the largest mass
