@@ -22,21 +22,25 @@ Game::~Game() {
 
 // Initialize the entities
 void Game::initEntities() {
-	double scaleFactor = sim.getScaleFactor();
-
 	util::Vector2 sunVelocity(0.0, 0.0);
 	util::Vector2 sunPosition(width / 2, height / 2);
-	Entity sun(50l, 1.988416e6, sunVelocity, sunPosition);
+	double sunRadius = 6.957e5;
+	double sunMass = 1.988416e30;
+	Entity sun(100, sunMass, sunVelocity, sunPosition, YELLOW);
 
 	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
-	util::Vector2 earthVelocity(0.001, 0.0);
-	util::Vector2 earthPosition(sunPosition.x, (height / 2) + (149598023 * scaleFactor));
-	Entity earth(5l, 5.972168, earthVelocity, earthPosition);
+	util::Vector2 earthVelocity(29.7827, 0.0);
+	util::Vector2 earthPosition(sunPosition.x, sunPosition.y + 149598023);
+	double earthRadius = 6371;
+	double earthMass = 5.972168e24;
+	Entity earth(25, earthMass, earthVelocity, earthPosition, BLUE);
 
 	// MarsMass / SunMass = 3.227 * 10^-7 kg/kg (3.227 / 10,000,000)
-	util::Vector2 marsVelocity(0.001, 0.0);
-	util::Vector2 marsPosition(sunPosition.x, (height / 2) + 125);
-	Entity mars(4l, 0.639022, marsVelocity, marsPosition);
+	util::Vector2 marsVelocity(24.07, 0.0);
+	util::Vector2 marsPosition(sunPosition.x, sunPosition.y + 227939366);
+	double marsRadius = 3389.5;
+	double marsMass = 6.4171e23;
+	Entity mars(20, marsMass, marsVelocity, marsPosition, RED);
 
 	entities.push_back(sun);
 	entities.push_back(earth);
@@ -49,7 +53,7 @@ void Game::initEntities(const std::vector<Entity>& entities) {
 
 void Game::start() {
 	// Set camera zoom
-	camera.zoom = 1.0f;
+	camera.zoom = 0.75f;
 	
 	// Start a frame counter
 	int framCounter = 0;
@@ -191,7 +195,8 @@ void Game::zoomCamera() {
 
 		// Zoom increment
 		float scaleFactor = 1.0f + (0.25f * fabs(wheel));
-		if (wheel < 0) scaleFactor = 1.0f / scaleFactor;
+		if (wheel < 0) 
+			scaleFactor = 1.0f / scaleFactor;
 		camera.zoom = Clamp(camera.zoom * scaleFactor, 0.125f, 64.0f);
 	}
 }
