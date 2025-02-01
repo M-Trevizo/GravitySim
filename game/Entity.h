@@ -8,7 +8,8 @@
 class Entity {
 public:
 	Entity();
-	Entity(long r, double m, util::Vector2 v, util::Vector2 pos);
+	Entity(double r, double m, util::Vector2 v, util::Vector2 pos);
+	Entity(double r, double m, util::Vector2 v, util::Vector2 pos, Color c);
 
 	util::Vector2 getVelocity() const { return velocity; }
 	util::Vector2 getPosition() const { return position; }
@@ -22,9 +23,13 @@ public:
 	static void drawEntities(const std::vector<Entity>& entities);
 
 private:
-	long radius;
+	static constexpr double distanceScale = 1e-5;			// Scale Distance
+
+	double radius;
 	double mass;
 	util::Vector2 velocity;
 	util::Vector2 position;
+
+	Color color;
 };
 
