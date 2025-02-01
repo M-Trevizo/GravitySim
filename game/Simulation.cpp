@@ -79,7 +79,7 @@ void Simulation::setTimeScale(int newTimeScale) {
 }
 
 void Simulation::updateStepsPerSecond() {
-	stepsPerSecond = timeScale * 5000;
+	stepsPerSecond = timeScale * baseStep;
 }
 
 // Finds entity with the largest mass

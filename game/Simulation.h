@@ -17,10 +17,11 @@ public:
 	
 private:
 	static constexpr double gravConstant = 6.67430e-11;		// Gravitational Constant
-	
+	static const int baseStep = 8640;
+
 	bool isPaused = false;
 	int timeScale = 1;
-	int stepsPerSecond = 5000 * timeScale;
+	int stepsPerSecond = baseStep * timeScale;					// 8640 is seconds per day / 10
 
 	int findMostMassive(std::vector<Entity>& entities);
 };
