@@ -22,46 +22,57 @@ Game::~Game() {
 
 // Initialize the entities
 void Game::initEntities() {
-	util::Vector2 sunVelocity(0.0, 0.0);
+
+	// Sun
 	util::Vector2 sunPosition(width / 2, height / 2);
-	double sunRadius = 6.957e5;
-	double sunMass = 1.988416e30;
-	Entity sun(100, sunMass, sunVelocity, sunPosition, YELLOW);
+	entities.emplace_back(
+		Entity(
+			100,
+			1.988416e30,
+			util::Vector2(0.0, 0.0),
+			sunPosition,
+			YELLOW
+		));
 
 	// Mercury
-	util::Vector2 mercuryVelocity(47.36, 0.0);
-	util::Vector2 mercuryPosition(sunPosition.x, sunPosition.y + 57.91e6);
-	double mercuryRadius = 2439.7;
-	double mercuryMass = 3.3011e23;
-	Entity mercury(15, mercuryMass, mercuryVelocity, mercuryPosition, GRAY);
+	entities.emplace_back(
+		Entity(
+			15,
+			3.3011e23,
+			util::Vector2(47.36, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 57.91e6),
+			GRAY
+		));
 
 	// Venus
-	util::Vector2 venusVelocity(35.02, 0.0);
-	util::Vector2 venusPosition(sunPosition.x, sunPosition.y + 108.94e6);
-	double venusRadius = 6051.8;
-	double venusMass = 4.8675e24;
-	Entity venus(25, venusMass, venusVelocity, venusPosition, {192, 191, 187, 255});
+	entities.emplace_back(
+		Entity(
+			25,
+			4.8675e24,
+			util::Vector2(35.02, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 108.94e6),
+			{ 192, 191, 187, 255 }
+		));
 
-	// EarthMass / SunMass = 3 * 10^-6 (3 / 1,000,000)
-	util::Vector2 earthVelocity(29.7827, 0.0);
-	util::Vector2 earthPosition(sunPosition.x, sunPosition.y + 149598023);
-	double earthRadius = 6371;
-	double earthMass = 5.972168e24;
-	Entity earth(25, earthMass, earthVelocity, earthPosition, BLUE);
+	// Earth
+	entities.emplace_back(
+		Entity(
+			25,
+			5.972168e24,
+			util::Vector2(29.7827, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 149598023),
+			BLUE
+		));
 
-	// MarsMass / SunMass = 3.227 * 10^-7 kg/kg (3.227 / 10,000,000)
-	util::Vector2 marsVelocity(24.07, 0.0);
-	util::Vector2 marsPosition(sunPosition.x, sunPosition.y + 227939366);
-	double marsRadius = 3389.5;
-	double marsMass = 6.4171e23;
-	Entity mars(20, marsMass, marsVelocity, marsPosition, RED);
-
-
-	entities.push_back(sun);
-	entities.push_back(mercury);
-	entities.push_back(venus);
-	entities.push_back(earth);
-	entities.push_back(mars);
+	// Mars
+	entities.emplace_back(
+		Entity(
+			20,
+			6.4171e23,
+			util::Vector2(24.07, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 227939366),
+			RED
+		));
 
 	// Jupiter
 	entities.emplace_back(
@@ -72,6 +83,7 @@ void Game::initEntities() {
 			util::Vector2(sunPosition.x, sunPosition.y + 7.78595e8),
 			DARKBROWN
 		));
+
 	// Saturn
 	entities.emplace_back(
 		Entity(
@@ -81,6 +93,7 @@ void Game::initEntities() {
 			util::Vector2(sunPosition.x, sunPosition.y + 1.43353e9),
 			BROWN
 		));
+
 	// Uranus
 	entities.emplace_back(
 		Entity(
@@ -90,6 +103,7 @@ void Game::initEntities() {
 			util::Vector2(sunPosition.x, sunPosition.y + 2.870972e9),
 			{113, 212, 240, 255} // Light Blue
 		));
+
 	// Neptune
 	entities.emplace_back(
 		Entity(
@@ -99,6 +113,7 @@ void Game::initEntities() {
 			util::Vector2(sunPosition.x, sunPosition.y + 4.50e9),
 			{153, 227, 247, 255} // Lighter Blue
 		));
+
 	// Pluto (It's a planet in my heart)
 	entities.emplace_back(
 		Entity(
