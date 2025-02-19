@@ -21,7 +21,7 @@ private:
 
 	bool isPaused = false;
 	int timeScale = 1;
-	int stepsPerSecond = baseStep * timeScale;					// 8640 is seconds per day / 10
+	int stepsPerSecond = baseStep * timeScale;				// 8640 is seconds per day / 10
 
 	int findMostMassive(std::vector<Entity>& entities);
 };

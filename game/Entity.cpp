@@ -48,13 +48,36 @@ void Entity::drawEntity(Entity entity) {
 	DrawCircle(posX, posY, radius, color);
 }
 
-void Entity::drawEntities(const std::vector<Entity>& entities) {
+void Entity::drawEntities(std::vector<Entity>& entities) {
 	for (int i = 0; i < entities.size(); i++) {
-		float radius = static_cast<float>(entities[i].radius);
-		int posX = static_cast<int>(entities[i].position.x * distanceScale) + GetScreenWidth();
-		int posY = static_cast<int>(entities[i].position.y * distanceScale) + GetScreenHeight();
-		Color color = entities[i].color;
+		Entity& entity = entities[i];
+		
+		float radius = static_cast<float>(entity.radius);
+		int posX = static_cast<int>(entity.position.x * distanceScale) + GetScreenWidth();
+		int posY = static_cast<int>(entity.position.y * distanceScale) + GetScreenHeight();
+		Color color = entity.color;
 
 		DrawCircle(posX, posY, radius, color);
 	}
 }
+
+/*
+* For now, drawing trails is too slow to work
+* Maybe I'll come back to it another time.
+*/
+
+/*
+void Entity::pushToTrailBuffer(Vector2 pos) {
+	if (trailBuffer.size() >= 1000) {
+		trailBuffer.pop_front();
+	}
+	trailBuffer.push_back(pos);
+}
+
+void Entity::drawTrail() const {
+	for (Vector2 pos : trailBuffer) {
+		DrawPixelV(pos, WHITE);
+	}
+}
+*/
+

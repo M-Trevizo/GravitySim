@@ -4,6 +4,7 @@
 #include "../util/Vector2.h"
 
 #include <vector>
+#include <deque>
 
 class Entity {
 public:
@@ -17,10 +18,14 @@ public:
 
 	void setVelocity(util::Vector2 updatedVelocity);
 	void setPosition(util::Vector2 updatedPosition);
-	
 
 	static void drawEntity(Entity entity);
-	static void drawEntities(const std::vector<Entity>& entities);
+	static void drawEntities(std::vector<Entity>& entities);
+	
+	/*
+	void drawTrail() const;
+	void pushToTrailBuffer(Vector2 pos);
+	*/
 
 private:
 	static constexpr double distanceScale = 1e-5;			// Scale Distance
@@ -31,5 +36,7 @@ private:
 	util::Vector2 position;
 
 	Color color;
+	std::deque<Vector2> trailBuffer;						// Hold position info for drawing a trail
+
 };
 
