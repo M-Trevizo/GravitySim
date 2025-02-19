@@ -62,6 +62,52 @@ void Game::initEntities() {
 	entities.push_back(venus);
 	entities.push_back(earth);
 	entities.push_back(mars);
+
+	// Jupiter
+	entities.emplace_back(
+		Entity(
+			50,
+			1.8982e27,
+			util::Vector2(13.06, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 7.78595e8),
+			DARKBROWN
+		));
+	// Saturn
+	entities.emplace_back(
+		Entity(
+			45,
+			5.6834e26,
+			util::Vector2(9.68, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 1.43353e9),
+			BROWN
+		));
+	// Uranus
+	entities.emplace_back(
+		Entity(
+			40,
+			8.6810e25,
+			util::Vector2(6.80, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 2.870972e9),
+			{113, 212, 240, 255} // Light Blue
+		));
+	// Neptune
+	entities.emplace_back(
+		Entity(
+			40,
+			1.024e26,
+			util::Vector2(5.43, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 4.50e9),
+			{153, 227, 247, 255} // Lighter Blue
+		));
+	// Pluto (It's a planet in my heart)
+	entities.emplace_back(
+		Entity(
+			10,
+			1.3025e22,
+			util::Vector2(4.743, 0.0),
+			util::Vector2(sunPosition.x, sunPosition.y + 5.90638e9),
+			LIGHTGRAY
+		));
 }
 
 void Game::initEntities(const std::vector<Entity>& entities) {
@@ -153,7 +199,7 @@ void Game::handleMousePresses() {
 	}
 }
 
-void Game::drawTitleScreen() {
+void Game::drawTitleScreen() const {
 	std::string title = "Gravity the Game!";
 	int titleCenter = MeasureText(title.c_str(), 30) / 2;
 
@@ -164,7 +210,7 @@ void Game::drawTitleScreen() {
 	DrawText(start.c_str(), getCenter().x - startCenter, getCenter().y - 10, 20, WHITE);
 }
 
-void Game::drawPauseModal() {
+void Game::drawPauseModal() const {
 	float targetX = getCenter().x - 100;
 	float targetY = getCenter().y - 50;
 	int textCenter = MeasureText("Paused", 30) / 2;
@@ -228,8 +274,12 @@ void Game::incTimeScale() {
 		sim.setTimeScale(timeScale + 1);
 		sim.updateStepsPerSecond();
 	}
-	else if (timeScale < 25) {
+	else if (timeScale < 20) {
 		sim.setTimeScale(timeScale + 5);
+		sim.updateStepsPerSecond();
+	}
+	else if (timeScale < 50) {
+		sim.setTimeScale(timeScale + 10);
 		sim.updateStepsPerSecond();
 	}
 	
@@ -237,7 +287,11 @@ void Game::incTimeScale() {
 
 void Game::decTimeScale() {
 	int timeScale = sim.getTimeScale();
-	if (timeScale > 5) {
+	if (timeScale > 20) {
+		sim.setTimeScale(timeScale - 10);
+		sim.updateStepsPerSecond();
+	}
+	else if (timeScale > 5) {
 		sim.setTimeScale(timeScale - 5);
 		sim.updateStepsPerSecond();
 	}

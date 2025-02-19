@@ -40,8 +40,8 @@ private:
 	void dragCamera();
 	void zoomCamera();
 
-	void drawTitleScreen();
-	void drawPauseModal();
+	void drawTitleScreen() const;
+	void drawPauseModal() const;
 	void drawDebugInfo();
 
 	void incTimeScale();
